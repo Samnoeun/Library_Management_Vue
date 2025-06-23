@@ -1,6 +1,6 @@
 <script setup>
 import { ref, onMounted } from 'vue'
-import api from '../axios'  // adjust the path if needed
+import api from '../axios'
 
 const books = ref([])
 
