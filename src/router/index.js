@@ -12,7 +12,7 @@ const router = createRouter({
     {
       path: "/books",
       name: "books",
-      component: () => import("../views/AboutView.vue")
+      component: () => import("../views/BookView.vue")
     },
     { 
       path: "/members",
@@ -28,6 +28,26 @@ const router = createRouter({
       path: '/about',
       name: 'about',
       component: () => import('../views/AboutView.vue')
+    },
+    {
+      path: '/categories',
+      name: 'categories',
+      component: () => import('../views/CategoriesView.vue')
+    },
+    {
+      path: '/libraries',
+      name: 'libraries',
+      component: () => import('../views/LibrariesView.vue')
+    },
+    {
+      path: '/librarians',
+      name: 'librarians',
+      component: () => import('../views/LibrariansView.vue')
+    },
+    {
+      path: '/bookings',
+      name: 'bookings',
+      component: () => import('../views/BookingsView.vue')
     }
 
       

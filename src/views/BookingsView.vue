@@ -1,20 +1,20 @@
 <template>
-  <div class="min-h-screen bg-gradient-to-br from-gray-50 via-orange-50 to-amber-50 dark:from-gray-900 dark:via-gray-900 dark:to-gray-800 p-4 sm:p-6">
+  <div class="min-h-screen bg-gradient-to-br from-gray-50 via-blue-50 to-purple-50 dark:from-gray-900 dark:via-gray-900 dark:to-gray-800 p-4 sm:p-6">
     <div class="max-w-7xl mx-auto">
       <!-- Enhanced Header Section -->
       <div class="mb-8">
         <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
           <div class="space-y-2">
             <h1 class="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white flex items-center gap-3">
-              <div class="w-12 h-12 bg-gradient-to-br from-orange-500 via-amber-500 to-yellow-600 rounded-xl flex items-center justify-center shadow-lg">
-                <BookOpenIcon class="w-7 h-7 text-white" />
+              <div class="w-12 h-12 bg-gradient-to-br from-purple-500 via-blue-500 to-indigo-600 rounded-xl flex items-center justify-center shadow-lg">
+                <CalendarIcon class="w-7 h-7 text-white" />
               </div>
-              <span class="bg-gradient-to-r from-orange-600 to-amber-600 bg-clip-text text-transparent">
-                Borrowings Hub
+              <span class="bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent">
+                Bookings Hub
               </span>
             </h1>
             <p class="text-gray-600 dark:text-gray-400 text-lg">
-              Track and manage book borrowings across your library network
+              Manage library reservations with ease
             </p>
           </div>
           
@@ -28,10 +28,10 @@
             </button>
             <button
               @click="openModal('add')"
-              class="px-6 py-2.5 bg-gradient-to-r from-orange-600 via-amber-600 to-yellow-600 hover:from-orange-700 hover:via-amber-700 hover:to-yellow-700 text-white rounded-lg font-medium shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-200 flex items-center gap-2"
+              class="px-6 py-2.5 bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-600 hover:from-blue-700 hover:via-purple-700 hover:to-indigo-700 text-white rounded-lg font-medium shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-200 flex items-center gap-2"
             >
               <PlusIcon class="w-5 h-5" />
-              <span class="hidden sm:inline">Add New</span> Borrowing
+              <span class="hidden sm:inline">Add New</span> Booking
             </button>
           </div>
         </div>
@@ -39,7 +39,7 @@
 
       <!-- Enhanced Search and Filter Section -->
       <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-200 dark:border-gray-700 p-6 mb-8">
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
           <!-- Search Input -->
           <div class="lg:col-span-2">
             <div class="relative">
@@ -47,8 +47,8 @@
               <input
                 v-model="searchQuery"
                 type="text"
-                placeholder="Search borrowings, books, or members..."
-                class="w-full pl-10 pr-10 py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all"
+                placeholder="Search bookings, books, or members..."
+                class="w-full pl-10 pr-10 py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
               />
               <button
                 v-if="searchQuery"
@@ -64,7 +64,7 @@
           <div>
             <select
               v-model="selectedBook"
-              class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent"
+              class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
             >
               <option value="">All Books</option>
               <option v-for="book in books" :key="book.id" :value="book.id">
@@ -77,7 +77,7 @@
           <div>
             <select
               v-model="selectedMember"
-              class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent"
+              class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
             >
               <option value="">All Members</option>
               <option v-for="member in members" :key="member.id" :value="member.id">
@@ -85,45 +85,26 @@
               </option>
             </select>
           </div>
-
-          <!-- Status Filter -->
-          <div>
-            <select
-              v-model="selectedStatus"
-              class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent"
-            >
-              <option value="">All Status</option>
-              <option value="active">Active</option>
-              <option value="returned">Returned</option>
-              <option value="overdue">Overdue</option>
-            </select>
-          </div>
         </div>
 
         <!-- Filter Tags -->
         <div v-if="hasActiveFilters" class="flex flex-wrap gap-2 mt-4 pt-4 border-t border-gray-200 dark:border-gray-700">
           <span class="text-sm text-gray-600 dark:text-gray-400 mr-2">Active filters:</span>
-          <span v-if="searchQuery" class="inline-flex items-center gap-1 px-3 py-1 bg-orange-100 dark:bg-orange-900/30 text-orange-800 dark:text-orange-300 rounded-full text-sm">
+          <span v-if="searchQuery" class="inline-flex items-center gap-1 px-3 py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-300 rounded-full text-sm">
             Search: "{{ searchQuery }}"
-            <button @click="searchQuery = ''" class="hover:text-orange-600">
+            <button @click="searchQuery = ''" class="hover:text-blue-600">
               <XIcon class="w-3 h-3" />
             </button>
           </span>
-          <span v-if="selectedBook" class="inline-flex items-center gap-1 px-3 py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-300 rounded-full text-sm">
+          <span v-if="selectedBook" class="inline-flex items-center gap-1 px-3 py-1 bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-300 rounded-full text-sm">
             Book: {{ getBookTitle(selectedBook) }}
-            <button @click="selectedBook = ''" class="hover:text-blue-600">
+            <button @click="selectedBook = ''" class="hover:text-green-600">
               <XIcon class="w-3 h-3" />
             </button>
           </span>
-          <span v-if="selectedMember" class="inline-flex items-center gap-1 px-3 py-1 bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-300 rounded-full text-sm">
+          <span v-if="selectedMember" class="inline-flex items-center gap-1 px-3 py-1 bg-purple-100 dark:bg-purple-900/30 text-purple-800 dark:text-purple-300 rounded-full text-sm">
             Member: {{ getMemberName(selectedMember) }}
-            <button @click="selectedMember = ''" class="hover:text-green-600">
-              <XIcon class="w-3 h-3" />
-            </button>
-          </span>
-          <span v-if="selectedStatus" class="inline-flex items-center gap-1 px-3 py-1 bg-purple-100 dark:bg-purple-900/30 text-purple-800 dark:text-purple-300 rounded-full text-sm">
-            Status: {{ selectedStatus }}
-            <button @click="selectedStatus = ''" class="hover:text-purple-600">
+            <button @click="selectedMember = ''" class="hover:text-purple-600">
               <XIcon class="w-3 h-3" />
             </button>
           </span>
@@ -138,15 +119,15 @@
 
       <!-- Enhanced Stats Cards -->
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mb-8">
-        <div class="bg-gradient-to-br from-orange-500 to-orange-600 rounded-2xl shadow-lg p-6 text-white">
+        <div class="bg-gradient-to-br from-blue-500 to-blue-600 rounded-2xl shadow-lg p-6 text-white">
           <div class="flex items-center justify-between">
             <div>
-              <p class="text-orange-100 text-sm font-medium">Total Borrowings</p>
-              <p class="text-3xl font-bold">{{ filteredBorrows.length }}</p>
-              <p class="text-orange-200 text-xs mt-1">{{ borrows.length }} total</p>
+              <p class="text-blue-100 text-sm font-medium">Total Bookings</p>
+              <p class="text-3xl font-bold">{{ filteredBookings.length }}</p>
+              <p class="text-blue-200 text-xs mt-1">{{ bookings.length }} total</p>
             </div>
             <div class="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center">
-              <BookOpenIcon class="w-6 h-6" />
+              <CalendarIcon class="w-6 h-6" />
             </div>
           </div>
         </div>
@@ -154,35 +135,35 @@
         <div class="bg-gradient-to-br from-green-500 to-green-600 rounded-2xl shadow-lg p-6 text-white">
           <div class="flex items-center justify-between">
             <div>
-              <p class="text-green-100 text-sm font-medium">Active Borrowings</p>
-              <p class="text-3xl font-bold">{{ getActiveBorrowings() }}</p>
-              <p class="text-green-200 text-xs mt-1">Currently borrowed</p>
+              <p class="text-green-100 text-sm font-medium">Available Books</p>
+              <p class="text-3xl font-bold">{{ books.length }}</p>
+              <p class="text-green-200 text-xs mt-1">Ready to book</p>
             </div>
             <div class="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center">
-              <CheckCircleIcon class="w-6 h-6" />
+              <BookIcon class="w-6 h-6" />
             </div>
           </div>
         </div>
         
-        <div class="bg-gradient-to-br from-red-500 to-red-600 rounded-2xl shadow-lg p-6 text-white">
+        <div class="bg-gradient-to-br from-purple-500 to-purple-600 rounded-2xl shadow-lg p-6 text-white">
           <div class="flex items-center justify-between">
             <div>
-              <p class="text-red-100 text-sm font-medium">Overdue</p>
-              <p class="text-3xl font-bold">{{ getOverdueBorrowings() }}</p>
-              <p class="text-red-200 text-xs mt-1">Need attention</p>
+              <p class="text-purple-100 text-sm font-medium">Active Members</p>
+              <p class="text-3xl font-bold">{{ members.length }}</p>
+              <p class="text-purple-200 text-xs mt-1">Registered users</p>
             </div>
             <div class="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center">
-              <AlertTriangleIcon class="w-6 h-6" />
+              <UsersIcon class="w-6 h-6" />
             </div>
           </div>
         </div>
 
-        <div class="bg-gradient-to-br from-blue-500 to-blue-600 rounded-2xl shadow-lg p-6 text-white">
+        <div class="bg-gradient-to-br from-orange-500 to-orange-600 rounded-2xl shadow-lg p-6 text-white">
           <div class="flex items-center justify-between">
             <div>
-              <p class="text-blue-100 text-sm font-medium">This Month</p>
-              <p class="text-3xl font-bold">{{ getThisMonthBorrowings() }}</p>
-              <p class="text-blue-200 text-xs mt-1">New borrowings</p>
+              <p class="text-orange-100 text-sm font-medium">This Month</p>
+              <p class="text-3xl font-bold">{{ getThisMonthBookings() }}</p>
+              <p class="text-orange-200 text-xs mt-1">New bookings</p>
             </div>
             <div class="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center">
               <TrendingUpIcon class="w-6 h-6" />
@@ -192,52 +173,52 @@
       </div>
 
       <!-- Results Summary -->
-      <div v-if="filteredBorrows.length > 0" class="mb-6">
+      <div v-if="filteredBookings.length > 0" class="mb-6">
         <p class="text-gray-600 dark:text-gray-400 text-sm">
-          Showing {{ filteredBorrows.length }} of {{ borrows.length }} borrowings
-          <span v-if="hasActiveFilters" class="text-orange-600 dark:text-orange-400">
+          Showing {{ filteredBookings.length }} of {{ bookings.length }} bookings
+          <span v-if="hasActiveFilters" class="text-blue-600 dark:text-blue-400">
             (filtered)
           </span>
         </p>
       </div>
 
-      <!-- Enhanced Borrowings Display -->
-      <div v-if="filteredBorrows.length > 0">
+      <!-- Enhanced Bookings Display -->
+      <div v-if="filteredBookings.length > 0">
         <!-- Grid View -->
         <div v-if="viewMode === 'grid'" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-6">
           <div
-            v-for="borrow in paginatedBorrows"
-            :key="borrow.id"
-            class="bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-200 dark:border-gray-700 hover:shadow-xl hover:border-orange-300 dark:hover:border-orange-600 transition-all duration-300 overflow-hidden group"
+            v-for="booking in paginatedBookings"
+            :key="booking.id"
+            class="bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-200 dark:border-gray-700 hover:shadow-xl hover:border-blue-300 dark:hover:border-blue-600 transition-all duration-300 overflow-hidden group"
           >
             <!-- Card Header -->
-            <div class="bg-gradient-to-r from-orange-50 via-amber-50 to-yellow-50 dark:from-gray-700 dark:via-gray-700 dark:to-gray-700 p-4 border-b border-gray-200 dark:border-gray-600">
+            <div class="bg-gradient-to-r from-blue-50 via-purple-50 to-indigo-50 dark:from-gray-700 dark:via-gray-700 dark:to-gray-700 p-4 border-b border-gray-200 dark:border-gray-600">
               <div class="flex items-center justify-between">
                 <div class="flex items-center gap-3">
-                  <div class="w-10 h-10 bg-gradient-to-br from-orange-500 via-amber-500 to-yellow-500 rounded-xl flex items-center justify-center shadow-lg">
-                    <BookIcon class="w-5 h-5 text-white" />
+                  <div class="w-10 h-10 bg-gradient-to-br from-blue-500 via-purple-500 to-indigo-500 rounded-xl flex items-center justify-center shadow-lg">
+                    <BookOpenIcon class="w-5 h-5 text-white" />
                   </div>
                   <div>
                     <h3 class="font-semibold text-gray-900 dark:text-white text-sm">
-                      Borrowing #{{ borrow.id }}
+                      Booking #{{ booking.id }}
                     </h3>
                     <p class="text-xs text-gray-500 dark:text-gray-400">
-                      {{ formatDate(borrow.borrow_date) }}
+                      {{ formatDate(booking.created_at) }}
                     </p>
                   </div>
                 </div>
                 <div class="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
                   <button
-                    @click="openModal('edit', borrow)"
-                    class="p-2 text-orange-600 hover:bg-orange-100 dark:hover:bg-orange-900/30 rounded-lg transition-colors"
-                    title="Edit borrowing"
+                    @click="openModal('edit', booking)"
+                    class="p-2 text-blue-600 hover:bg-blue-100 dark:hover:bg-blue-900/30 rounded-lg transition-colors"
+                    title="Edit booking"
                   >
                     <EditIcon class="w-4 h-4" />
                   </button>
                   <button
-                    @click="deleteBorrow(borrow.id)"
+                    @click="deleteBooking(booking.id)"
                     class="p-2 text-red-600 hover:bg-red-100 dark:hover:bg-red-900/30 rounded-lg transition-colors"
-                    title="Delete borrowing"
+                    title="Delete booking"
                   >
                     <TrashIcon class="w-4 h-4" />
                   </button>
@@ -248,10 +229,10 @@
             <!-- Card Content -->
             <div class="p-4 space-y-4">
               <div class="flex items-start gap-3">
-                <BookOpenIcon class="w-5 h-5 text-orange-500 mt-0.5 flex-shrink-0" />
+                <BookIcon class="w-5 h-5 text-blue-500 mt-0.5 flex-shrink-0" />
                 <div class="min-w-0 flex-1">
-                  <p class="text-sm font-medium text-gray-900 dark:text-white truncate" :title="borrow.book.title">
-                    {{ borrow.book.title }}
+                  <p class="text-sm font-medium text-gray-900 dark:text-white truncate" :title="booking.book.title">
+                    {{ booking.book.title }}
                   </p>
                   <p class="text-xs text-gray-500 dark:text-gray-400">Book Title</p>
                 </div>
@@ -260,30 +241,20 @@
               <div class="flex items-start gap-3">
                 <UserIcon class="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" />
                 <div class="min-w-0 flex-1">
-                  <p class="text-sm font-medium text-gray-900 dark:text-white truncate" :title="borrow.member.user.name">
-                    {{ borrow.member.user.name }}
+                  <p class="text-sm font-medium text-gray-900 dark:text-white truncate" :title="booking.member.user.name">
+                    {{ booking.member.user.name }}
                   </p>
-                  <p class="text-xs text-gray-500 dark:text-gray-400">Member</p>
+                  <p class="text-xs text-gray-500 dark:text-gray-400">Member Name</p>
                 </div>
               </div>
               
               <div class="flex items-start gap-3">
-                <UserCheckIcon class="w-5 h-5 text-blue-500 mt-0.5 flex-shrink-0" />
-                <div class="min-w-0 flex-1">
-                  <p class="text-sm font-medium text-gray-900 dark:text-white truncate" :title="borrow.librarian.user.name">
-                    {{ borrow.librarian.user.name }}
-                  </p>
-                  <p class="text-xs text-gray-500 dark:text-gray-400">Librarian</p>
-                </div>
-              </div>
-              
-              <div class="flex items-start gap-3">
-                <CalendarIcon class="w-5 h-5 text-purple-500 mt-0.5 flex-shrink-0" />
+                <ClockIcon class="w-5 h-5 text-purple-500 mt-0.5 flex-shrink-0" />
                 <div class="min-w-0 flex-1">
                   <p class="text-sm font-medium text-gray-900 dark:text-white">
-                    {{ formatDate(borrow.borrow_date) }}
+                    {{ formatDateTime(booking.created_at) }}
                   </p>
-                  <p class="text-xs text-gray-500 dark:text-gray-400">Borrow Date</p>
+                  <p class="text-xs text-gray-500 dark:text-gray-400">Created At</p>
                 </div>
               </div>
             </div>
@@ -291,36 +262,20 @@
             <!-- Card Footer -->
             <div class="px-4 py-3 bg-gray-50 dark:bg-gray-700/50 border-t border-gray-200 dark:border-gray-600">
               <div class="flex items-center justify-between">
-                <span 
-                  :class="[
-                    'inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium',
-                    getBorrowStatus(borrow) === 'active' 
-                      ? 'bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400'
-                      : getBorrowStatus(borrow) === 'overdue'
-                      ? 'bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-400'
-                      : 'bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-400'
-                  ]"
-                >
-                  <div 
-                    :class="[
-                      'w-1.5 h-1.5 rounded-full mr-1.5',
-                      getBorrowStatus(borrow) === 'active' ? 'bg-green-400' 
-                      : getBorrowStatus(borrow) === 'overdue' ? 'bg-red-400' 
-                      : 'bg-blue-400'
-                    ]"
-                  ></div>
-                  {{ getBorrowStatus(borrow) === 'active' ? 'Active' : getBorrowStatus(borrow) === 'overdue' ? 'Overdue' : 'Returned' }}
+                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400">
+                  <div class="w-1.5 h-1.5 bg-green-400 rounded-full mr-1.5"></div>
+                  Active
                 </span>
                 <div class="flex items-center gap-2">
                   <button
-                    @click="openModal('edit', borrow)"
-                    class="text-xs text-orange-600 hover:text-orange-800 dark:text-orange-400 dark:hover:text-orange-300 font-medium transition-colors"
+                    @click="openModal('edit', booking)"
+                    class="text-xs text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 font-medium transition-colors"
                   >
                     Edit
                   </button>
                   <span class="text-gray-300 dark:text-gray-600">|</span>
                   <button
-                    @click="deleteBorrow(borrow.id)"
+                    @click="deleteBooking(booking.id)"
                     class="text-xs text-red-600 hover:text-red-800 dark:text-red-400 dark:hover:text-red-300 font-medium transition-colors"
                   >
                     Delete
@@ -338,7 +293,7 @@
               <thead class="bg-gray-50 dark:bg-gray-700">
                 <tr>
                   <th class="px-6 py-4 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
-                    Borrowing
+                    Booking
                   </th>
                   <th class="px-6 py-4 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
                     Book
@@ -347,10 +302,7 @@
                     Member
                   </th>
                   <th class="px-6 py-4 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
-                    Librarian
-                  </th>
-                  <th class="px-6 py-4 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
-                    Borrow Date
+                    Created
                   </th>
                   <th class="px-6 py-4 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
                     Status
@@ -362,27 +314,27 @@
               </thead>
               <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
                 <tr
-                  v-for="borrow in paginatedBorrows"
-                  :key="borrow.id"
+                  v-for="booking in paginatedBookings"
+                  :key="booking.id"
                   class="hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors"
                 >
                   <td class="px-6 py-4 whitespace-nowrap">
                     <div class="flex items-center gap-3">
-                      <div class="w-8 h-8 bg-gradient-to-br from-orange-500 to-amber-500 rounded-lg flex items-center justify-center">
-                        <span class="text-white text-xs font-bold">#{{ borrow.id }}</span>
+                      <div class="w-8 h-8 bg-gradient-to-br from-blue-500 to-purple-500 rounded-lg flex items-center justify-center">
+                        <span class="text-white text-xs font-bold">#{{ booking.id }}</span>
                       </div>
                       <div>
                         <p class="text-sm font-medium text-gray-900 dark:text-white">
-                          Borrowing #{{ borrow.id }}
+                          Booking #{{ booking.id }}
                         </p>
                       </div>
                     </div>
                   </td>
                   <td class="px-6 py-4">
                     <div class="flex items-center gap-2">
-                      <BookIcon class="w-4 h-4 text-orange-500" />
-                      <p class="text-sm text-gray-900 dark:text-white truncate max-w-xs" :title="borrow.book.title">
-                        {{ borrow.book.title }}
+                      <BookIcon class="w-4 h-4 text-blue-500" />
+                      <p class="text-sm text-gray-900 dark:text-white truncate max-w-xs" :title="booking.book.title">
+                        {{ booking.book.title }}
                       </p>
                     </div>
                   </td>
@@ -390,58 +342,34 @@
                     <div class="flex items-center gap-2">
                       <UserIcon class="w-4 h-4 text-green-500" />
                       <p class="text-sm text-gray-900 dark:text-white">
-                        {{ borrow.member.user.name }}
-                      </p>
-                    </div>
-                  </td>
-                  <td class="px-6 py-4">
-                    <div class="flex items-center gap-2">
-                      <UserCheckIcon class="w-4 h-4 text-blue-500" />
-                      <p class="text-sm text-gray-900 dark:text-white">
-                        {{ borrow.librarian.user.name }}
+                        {{ booking.member.user.name }}
                       </p>
                     </div>
                   </td>
                   <td class="px-6 py-4 whitespace-nowrap">
                     <p class="text-sm text-gray-900 dark:text-white">
-                      {{ formatDate(borrow.borrow_date) }}
+                      {{ formatDateTime(booking.created_at) }}
                     </p>
                   </td>
                   <td class="px-6 py-4 whitespace-nowrap">
-                    <span 
-                      :class="[
-                        'inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium',
-                        getBorrowStatus(borrow) === 'active' 
-                          ? 'bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400'
-                          : getBorrowStatus(borrow) === 'overdue'
-                          ? 'bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-400'
-                          : 'bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-400'
-                      ]"
-                    >
-                      <div 
-                        :class="[
-                          'w-1.5 h-1.5 rounded-full mr-1.5',
-                          getBorrowStatus(borrow) === 'active' ? 'bg-green-400' 
-                          : getBorrowStatus(borrow) === 'overdue' ? 'bg-red-400' 
-                          : 'bg-blue-400'
-                        ]"
-                      ></div>
-                      {{ getBorrowStatus(borrow) === 'active' ? 'Active' : getBorrowStatus(borrow) === 'overdue' ? 'Overdue' : 'Returned' }}
+                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400">
+                      <div class="w-1.5 h-1.5 bg-green-400 rounded-full mr-1.5"></div>
+                      Active
                     </span>
                   </td>
                   <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                     <div class="flex items-center justify-end gap-2">
                       <button
-                        @click="openModal('edit', borrow)"
-                        class="text-orange-600 hover:text-orange-800 dark:text-orange-400 dark:hover:text-orange-300 p-1 rounded"
-                        title="Edit borrowing"
+                        @click="openModal('edit', booking)"
+                        class="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 p-1 rounded"
+                        title="Edit booking"
                       >
                         <EditIcon class="w-4 h-4" />
                       </button>
                       <button
-                        @click="deleteBorrow(borrow.id)"
+                        @click="deleteBooking(booking.id)"
                         class="text-red-600 hover:text-red-800 dark:text-red-400 dark:hover:text-red-300 p-1 rounded"
-                        title="Delete borrowing"
+                        title="Delete booking"
                       >
                         <TrashIcon class="w-4 h-4" />
                       </button>
@@ -456,7 +384,7 @@
         <!-- Enhanced Pagination -->
         <div v-if="totalPages > 1" class="mt-8 flex flex-col sm:flex-row items-center justify-between gap-4">
           <div class="text-sm text-gray-700 dark:text-gray-300">
-            Showing {{ ((currentPage - 1) * itemsPerPage) + 1 }} to {{ Math.min(currentPage * itemsPerPage, filteredBorrows.length) }} of {{ filteredBorrows.length }} results
+            Showing {{ ((currentPage - 1) * itemsPerPage) + 1 }} to {{ Math.min(currentPage * itemsPerPage, filteredBookings.length) }} of {{ filteredBookings.length }} results
           </div>
           <div class="flex items-center gap-2">
             <button
@@ -475,7 +403,7 @@
                 :class="[
                   'px-3 py-2 text-sm font-medium rounded-lg transition-colors',
                   page === currentPage
-                    ? 'bg-orange-600 text-white'
+                    ? 'bg-blue-600 text-white'
                     : 'text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-700'
                 ]"
               >
@@ -497,15 +425,15 @@
       <!-- Enhanced Empty State -->
       <div v-else class="text-center py-16">
         <div class="w-32 h-32 bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-800 dark:to-gray-700 rounded-full flex items-center justify-center mx-auto mb-8 shadow-inner">
-          <BookOpenIcon class="w-16 h-16 text-gray-400" />
+          <CalendarIcon class="w-16 h-16 text-gray-400" />
         </div>
         <h3 class="text-2xl font-bold text-gray-900 dark:text-white mb-3">
-          {{ hasActiveFilters ? 'No matching borrowings found' : 'No borrowings yet' }}
+          {{ hasActiveFilters ? 'No matching bookings found' : 'No bookings yet' }}
         </h3>
         <p class="text-gray-600 dark:text-gray-400 mb-8 max-w-md mx-auto text-lg">
           {{ hasActiveFilters 
             ? 'Try adjusting your search criteria or filters to find what you\'re looking for.' 
-            : 'Start tracking book borrowings by creating your first borrowing record.' 
+            : 'Get started by creating your first booking. Connect books with members to manage library reservations.' 
           }}
         </p>
         <div class="flex flex-col sm:flex-row gap-4 justify-center">
@@ -519,10 +447,10 @@
           </button>
           <button
             @click="openModal('add')"
-            class="px-8 py-3 bg-gradient-to-r from-orange-600 via-amber-600 to-yellow-600 hover:from-orange-700 hover:via-amber-700 hover:to-yellow-700 text-white rounded-lg font-medium shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-200 flex items-center gap-2 justify-center"
+            class="px-8 py-3 bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-600 hover:from-blue-700 hover:via-purple-700 hover:to-indigo-700 text-white rounded-lg font-medium shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-200 flex items-center gap-2 justify-center"
           >
             <PlusIcon class="w-5 h-5" />
-            {{ hasActiveFilters ? 'Create New Borrowing' : 'Create First Borrowing' }}
+            {{ hasActiveFilters ? 'Create New Booking' : 'Create First Booking' }}
           </button>
         </div>
       </div>
@@ -535,17 +463,17 @@
       @click.self="closeModal"
     >
       <div
-        class="bg-white dark:bg-gray-800 w-full max-w-2xl rounded-3xl shadow-2xl overflow-hidden transform transition-all duration-300 scale-100 max-h-[90vh] overflow-y-auto"
+        class="bg-white dark:bg-gray-800 w-full max-w-lg rounded-3xl shadow-2xl overflow-hidden transform transition-all duration-300 scale-100 max-h-[90vh] overflow-y-auto"
         @click.stop
       >
         <!-- Modal Header -->
-        <div class="bg-gradient-to-r from-orange-600 via-amber-600 to-yellow-600 px-6 py-6">
+        <div class="bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-600 px-6 py-6">
           <div class="flex items-center justify-between">
             <h3 class="text-xl font-bold text-white flex items-center gap-3">
               <div class="w-10 h-10 bg-white/20 rounded-xl flex items-center justify-center">
-                <BookOpenIcon class="w-6 h-6 text-white" />
+                <CalendarIcon class="w-6 h-6 text-white" />
               </div>
-              {{ modalMode === "add" ? "Create New Borrowing" : "Edit Borrowing" }}
+              {{ modalMode === "add" ? "Create New Booking" : "Edit Booking" }}
             </h3>
             <button
               @click="closeModal"
@@ -558,18 +486,18 @@
 
         <!-- Modal Content -->
         <form
-          @submit.prevent="modalMode === 'add' ? createBorrow() : updateBorrow()"
+          @submit.prevent="modalMode === 'add' ? createBooking() : updateBooking()"
           class="p-6 space-y-6"
         >
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div class="space-y-6">
             <div>
               <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-3">
-                <BookIcon class="w-5 h-5 inline mr-2 text-orange-500" />
+                <BookIcon class="w-5 h-5 inline mr-2 text-blue-500" />
                 Select Book
               </label>
               <select
-                v-model="formBorrow.book_id"
-                class="w-full px-4 py-4 border border-gray-300 dark:border-gray-600 rounded-xl bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all shadow-sm"
+                v-model="formBooking.book_id"
+                class="w-full px-4 py-4 border border-gray-300 dark:border-gray-600 rounded-xl bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all shadow-sm"
                 required
               >
                 <option value="" disabled>Choose a book...</option>
@@ -585,8 +513,8 @@
                 Select Member
               </label>
               <select
-                v-model="formBorrow.member_id"
-                class="w-full px-4 py-4 border border-gray-300 dark:border-gray-600 rounded-xl bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all shadow-sm"
+                v-model="formBooking.member_id"
+                class="w-full px-4 py-4 border border-gray-300 dark:border-gray-600 rounded-xl bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all shadow-sm"
                 required
               >
                 <option value="" disabled>Choose a member...</option>
@@ -598,40 +526,6 @@
                   {{ member.user.name }}
                 </option>
               </select>
-            </div>
-
-            <div>
-              <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-3">
-                <UserCheckIcon class="w-5 h-5 inline mr-2 text-blue-500" />
-                Select Librarian
-              </label>
-              <select
-                v-model="formBorrow.librarian_id"
-                class="w-full px-4 py-4 border border-gray-300 dark:border-gray-600 rounded-xl bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all shadow-sm"
-                required
-              >
-                <option value="" disabled>Choose a librarian...</option>
-                <option
-                  v-for="librarian in librarians"
-                  :key="librarian.id"
-                  :value="librarian.id"
-                >
-                  {{ librarian.user.name }}
-                </option>
-              </select>
-            </div>
-
-            <div>
-              <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-3">
-                <CalendarIcon class="w-5 h-5 inline mr-2 text-purple-500" />
-                Borrow Date
-              </label>
-              <input
-                v-model="formBorrow.borrow_date"
-                type="date"
-                class="w-full px-4 py-4 border border-gray-300 dark:border-gray-600 rounded-xl bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all shadow-sm"
-                required
-              />
             </div>
           </div>
 
@@ -646,9 +540,9 @@
             </button>
             <button
               type="submit"
-              class="px-8 py-3 bg-gradient-to-r from-orange-600 via-amber-600 to-yellow-600 hover:from-orange-700 hover:via-amber-700 hover:to-yellow-700 text-white rounded-xl font-medium shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-200"
+              class="px-8 py-3 bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-600 hover:from-blue-700 hover:via-purple-700 hover:to-indigo-700 text-white rounded-xl font-medium shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-200"
             >
-              {{ modalMode === "add" ? "Create Borrowing" : "Update Borrowing" }}
+              {{ modalMode === "add" ? "Create Booking" : "Update Booking" }}
             </button>
           </div>
         </form>
@@ -660,20 +554,19 @@
 <script setup>
 import { ref, computed, onMounted } from 'vue'
 import { 
+  CalendarIcon, 
+  PlusIcon, 
   BookOpenIcon, 
   BookIcon, 
-  PlusIcon, 
-  SearchIcon, 
+  UsersIcon, 
+  UserIcon, 
+  ClockIcon, 
+  EditIcon, 
+  TrashIcon, 
   XIcon,
-  EditIcon,
-  TrashIcon,
+  SearchIcon,
   GridIcon,
   ListIcon,
-  UserIcon,
-  UserCheckIcon,
-  CalendarIcon,
-  CheckCircleIcon,
-  AlertTriangleIcon,
   TrendingUpIcon,
   ChevronLeftIcon,
   ChevronRightIcon
@@ -681,25 +574,21 @@ import {
 import api from "../plugins/axios"
 
 // Reactive data
-const borrows = ref([])
+const bookings = ref([])
 const books = ref([])
 const members = ref([])
-const librarians = ref([])
 const showModal = ref(false)
 const modalMode = ref('add')
-const formBorrow = ref({
+const formBooking = ref({
   id: null,
   book_id: null,
-  member_id: null,
-  librarian_id: null,
-  borrow_date: ''
+  member_id: null
 })
 
 // Search and filter states
 const searchQuery = ref('')
 const selectedBook = ref('')
 const selectedMember = ref('')
-const selectedStatus = ref('')
 const viewMode = ref('grid')
 
 // Pagination
@@ -707,46 +596,40 @@ const currentPage = ref(1)
 const itemsPerPage = ref(12)
 
 // Computed properties
-const filteredBorrows = computed(() => {
-  let filtered = borrows.value
+const filteredBookings = computed(() => {
+  let filtered = bookings.value
 
   // Search filter
   if (searchQuery.value) {
     const query = searchQuery.value.toLowerCase()
-    filtered = filtered.filter(borrow => 
-      borrow.book.title.toLowerCase().includes(query) ||
-      borrow.member.user.name.toLowerCase().includes(query) ||
-      borrow.librarian.user.name.toLowerCase().includes(query) ||
-      borrow.id.toString().includes(query)
+    filtered = filtered.filter(booking => 
+      booking.book.title.toLowerCase().includes(query) ||
+      booking.member.user.name.toLowerCase().includes(query) ||
+      booking.id.toString().includes(query)
     )
   }
 
   // Book filter
   if (selectedBook.value) {
-    filtered = filtered.filter(borrow => borrow.book.id == selectedBook.value)
+    filtered = filtered.filter(booking => booking.book.id == selectedBook.value)
   }
 
   // Member filter
   if (selectedMember.value) {
-    filtered = filtered.filter(borrow => borrow.member.id == selectedMember.value)
-  }
-
-  // Status filter
-  if (selectedStatus.value) {
-    filtered = filtered.filter(borrow => getBorrowStatus(borrow) === selectedStatus.value)
+    filtered = filtered.filter(booking => booking.member.id == selectedMember.value)
   }
 
   return filtered
 })
 
-const paginatedBorrows = computed(() => {
+const paginatedBookings = computed(() => {
   const start = (currentPage.value - 1) * itemsPerPage.value
   const end = start + itemsPerPage.value
-  return filteredBorrows.value.slice(start, end)
+  return filteredBookings.value.slice(start, end)
 })
 
 const totalPages = computed(() => {
-  return Math.ceil(filteredBorrows.value.length / itemsPerPage.value)
+  return Math.ceil(filteredBookings.value.length / itemsPerPage.value)
 })
 
 const visiblePages = computed(() => {
@@ -786,14 +669,14 @@ const visiblePages = computed(() => {
 })
 
 const hasActiveFilters = computed(() => {
-  return searchQuery.value || selectedBook.value || selectedMember.value || selectedStatus.value
+  return searchQuery.value || selectedBook.value || selectedMember.value
 })
 
 // Methods
-const fetchBorrows = async () => {
+const fetchBookings = async () => {
   try {
-    const res = await api.get("/borrow")
-    borrows.value = res.data
+    const res = await api.get("/booking")
+    bookings.value = res.data
   } catch (err) {
     console.error(err)
   }
@@ -817,27 +700,16 @@ const fetchMembers = async () => {
   }
 }
 
-const fetchLibrarians = async () => {
-  try {
-    const res = await api.get("/librarians")
-    librarians.value = res.data
-  } catch (err) {
-    console.error(err)
-  }
-}
-
-const openModal = (mode, borrow = null) => {
+const openModal = (mode, booking = null) => {
   modalMode.value = mode
   showModal.value = true
-  if (mode === "edit" && borrow) {
-    formBorrow.value = { ...borrow }
+  if (mode === "edit" && booking) {
+    formBooking.value = { ...booking }
   } else {
-    formBorrow.value = {
+    formBooking.value = {
       id: null,
-      book_id: books.value.length ? books.value[0].id : null,
-      member_id: members.value.length ? members.value[0].id : null,
-      librarian_id: librarians.value.length ? librarians.value[0].id : null,
-      borrow_date: new Date().toISOString().split('T')[0]
+      book_id: '',
+      member_id: ''
     }
   }
 }
@@ -846,31 +718,31 @@ const closeModal = () => {
   showModal.value = false
 }
 
-const createBorrow = async () => {
+const createBooking = async () => {
   try {
-    await api.post("/borrow", formBorrow.value)
-    await fetchBorrows()
+    await api.post("/booking", formBooking.value)
+    await fetchBookings()
     closeModal()
   } catch (err) {
     console.error("Create Error:", err)
   }
 }
 
-const updateBorrow = async () => {
+const updateBooking = async () => {
   try {
-    await api.put(`/borrow/${formBorrow.value.id}`, formBorrow.value)
-    await fetchBorrows()
+    await api.put(`/booking/${formBooking.value.id}`, formBooking.value)
+    await fetchBookings()
     closeModal()
   } catch (err) {
     console.error("Update Error:", err)
   }
 }
 
-const deleteBorrow = async (id) => {
-  if (confirm("Are you sure you want to delete this borrowing?")) {
+const deleteBooking = async (id) => {
+  if (confirm("Are you sure you want to delete this booking?")) {
     try {
-      await api.delete(`/borrow/${id}`)
-      await fetchBorrows()
+      await api.delete(`/booking/${id}`)
+      await fetchBookings()
     } catch (err) {
       console.error("Delete Error:", err)
     }
@@ -885,7 +757,6 @@ const clearAllFilters = () => {
   searchQuery.value = ''
   selectedBook.value = ''
   selectedMember.value = ''
-  selectedStatus.value = ''
   currentPage.value = 1
 }
 
@@ -903,32 +774,12 @@ const getMemberName = (memberId) => {
   return member ? member.user.name : ''
 }
 
-const getBorrowStatus = (borrow) => {
-  // This is a simplified status calculation
-  // You might want to implement more complex logic based on return dates, due dates, etc.
-  const borrowDate = new Date(borrow.borrow_date)
+const getThisMonthBookings = () => {
   const now = new Date()
-  const daysDiff = Math.floor((now - borrowDate) / (1000 * 60 * 60 * 24))
-  
-  if (daysDiff > 30) return 'overdue'
-  if (daysDiff >= 0) return 'active'
-  return 'returned'
-}
-
-const getActiveBorrowings = () => {
-  return borrows.value.filter(borrow => getBorrowStatus(borrow) === 'active').length
-}
-
-const getOverdueBorrowings = () => {
-  return borrows.value.filter(borrow => getBorrowStatus(borrow) === 'overdue').length
-}
-
-const getThisMonthBorrowings = () => {
-  const now = new Date()
-  const thisMonth = borrows.value.filter(borrow => {
-    const borrowDate = new Date(borrow.borrow_date)
-    return borrowDate.getMonth() === now.getMonth() && 
-           borrowDate.getFullYear() === now.getFullYear()
+  const thisMonth = bookings.value.filter(booking => {
+    const bookingDate = new Date(booking.created_at)
+    return bookingDate.getMonth() === now.getMonth() && 
+           bookingDate.getFullYear() === now.getFullYear()
   })
   return thisMonth.length
 }
@@ -941,11 +792,25 @@ const formatDate = (dateString) => {
   })
 }
 
+const formatDateTime = (dateString) => {
+  return new Date(dateString).toLocaleString('en-US', {
+    year: 'numeric',
+    month: 'short',
+    day: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit'
+  })
+}
+
+// Watch for filter changes to reset pagination
+const resetPagination = () => {
+  currentPage.value = 1
+}
+
 // Lifecycle
 onMounted(() => {
-  fetchBorrows()
+  fetchBookings()
   fetchBooks()
   fetchMembers()
-  fetchLibrarians()
 })
 </script>
